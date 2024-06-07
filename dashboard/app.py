@@ -13,6 +13,10 @@ import plotly.express as px
 # load dataset
 df_base = pd.read_csv('../dataset/rfm.csv')
 
+# load models
+scaler = joblib.load('../models/scaler.pkl')
+kmeans = joblib.load('../models/4Clusters_model.pkl')
+
 
 st.set_page_config(
     page_title='Online Retail', 
@@ -23,4 +27,29 @@ alt.themes.enable('dark')
 with st.sidebar:
     st.title('Online Retail')
 
-    selected_analysis_type = st.selectbox('Select a type of analysis', ['Exploratory Data Analysis', 'Customer Segmentation'])
+    seleted_mode = st.selectbox('Select a type of analysis', ['Exploratory Data Analysis', 'Customer Segmentation'])
+
+if seleted_mode == 'Exploratory Data Analysis':
+    st.write('hello world')
+
+elif seleted_mode == 'Customer Segmentation':
+    ##
+    latest_date = st.date_input(
+        label='The date since the last purchase'
+    )
+    min_date = pd.to_datetime('2010-12-01')
+    recency = (pd.to_datetime(latest_date) - min_date)
+
+    ##
+    frequency = st.number_input(
+        label='Number of purchase', 
+        min_value=1, 
+        format='%d'
+        )
+    
+    ##
+    monetary = st.number_input(
+        label='Total amount of spent money', 
+        min_value=0., 
+        format='%f'
+    )
