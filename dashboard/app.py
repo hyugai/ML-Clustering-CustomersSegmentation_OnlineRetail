@@ -32,22 +32,23 @@ with st.sidebar:
 if seleted_mode == 'Exploratory Data Analysis':
     st.write('hello world')
 
+# segmentation
 elif seleted_mode == 'Customer Segmentation':
-    ##
+    ###
     latest_date = st.date_input(
         label='The date since the last purchase'
     )
     min_date = pd.to_datetime('2010-12-01')
-    recency = (pd.to_datetime(latest_date) - min_date)
+    recency = (pd.to_datetime(latest_date) - min_date).days
 
-    ##
+    ###
     frequency = st.number_input(
         label='Number of purchase', 
         min_value=1, 
         format='%d'
         )
     
-    ##
+    ###
     monetary = st.number_input(
         label='Total amount of spent money', 
         min_value=0., 
