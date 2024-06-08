@@ -2,6 +2,10 @@
 import numpy as np
 import pandas as pd
 
+# visualization
+import plotly.express as px
+import plotly.graph_objects as go
+
 # load model
 import joblib
 
@@ -11,7 +15,8 @@ import altair as alt
 import plotly.express as px
 
 # load dataset
-df_base = pd.read_csv('../dataset/rfm.csv')
+df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base['label'] = df_base['label'].astype(str)
 
 # load models
 scaler = joblib.load('../models/scaler.pkl')
@@ -34,23 +39,43 @@ if seleted_mode == 'Exploratory Data Analysis':
 
 # segmentation
 elif seleted_mode == 'Customer Segmentation':
-    ###
-    latest_date = st.date_input(
-        label='The date since the last purchase'
-    )
-    min_date = pd.to_datetime('2010-12-01')
-    recency = (pd.to_datetime(latest_date) - min_date).days
+    col1, col2 = st.columns(2)
 
-    ###
-    frequency = st.number_input(
-        label='Number of purchase', 
-        min_value=1, 
-        format='%d'
+    with col1:
+        ###
+        latest_date = st.date_input(
+            label='The date since the last purchase'
         )
-    
-    ###
-    monetary = st.number_input(
-        label='Total amount of spent money', 
-        min_value=0., 
-        format='%f'
-    )
+        min_date = pd.to_datetime('2010-12-01')
+        recency = (pd.to_datetime(latest_date) - min_date).days
+
+        ###
+        frequency = st.number_input(
+            label='Number of purchase', 
+            min_value=1, 
+            format='%d'
+            )
+        
+        ###
+        monetary = st.number_input(
+            label='Total amount of spent money', 
+            min_value=0., 
+            format='%f'
+        )
+
+    with col2:
+        if st.button('Make prediction'):
+            st.write('Testing')
+
+    fig = px.scatter_3d(data_frame=df_base, x='recency', y='frequency', z='monetary', 
+                        color='label',
+                        color_discrete_sequence=[
+                            px.colors.qualitative.Pastel1[0],
+                            px.colors.qualitative.Pastel[1],
+                            px.colors.qualitative.Pastel1[2],
+                            px.colors.qualitative.Pastel1[3]
+                        ], 
+                        opacity=0.5)
+    fig.add_trace(go.Scatter3d(x=[50], y=[100], z=[500], name='Your customer',
+                               mode='markers', marker=go.scatter3d.Marker(color=px.colors.qualitative.D3[3], size=10.5, symbol='diamond')))
+    st.plotly_chart(fig, theme=None)
