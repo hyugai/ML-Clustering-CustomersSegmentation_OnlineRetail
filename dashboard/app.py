@@ -1,5 +1,4 @@
 # data structures
-# %%
 import numpy as np
 import pandas as pd
 
@@ -46,7 +45,7 @@ if seleted_mode == 'Exploratory Data Analysis':
 
 # segmentation
 elif seleted_mode == 'Customer Segmentation':
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([0.1, 0.3])
 
     with col1:
         ###
@@ -71,22 +70,19 @@ elif seleted_mode == 'Customer Segmentation':
             format='%f'
         )
 
-    with col2:
-        if st.button('Make prediction'):
-            st.write('Testing')
-
     fig = px.scatter_3d(data_frame=df_base, x='recency', y='frequency', z='monetary', 
-                        color='Segmentation\'s type',
+                        color='Segmentation\'s type', opacity=0.55,
                         color_discrete_sequence=[
                             px.colors.qualitative.Pastel1[0],
                             px.colors.qualitative.Pastel[1],
                             px.colors.qualitative.Pastel1[2],
                             px.colors.qualitative.Pastel1[3]
                         ], 
-                        opacity=0.55)
+                        width=1000, height=800)
+    fig.update_layout(title='The \'\'Recency-Frequency-Monetary\'\' space')
     fig.add_trace(go.Scatter3d(x=[50], y=[100], z=[500], name='Customer',
-                               mode='markers+text', 
-                               text='<b>Your customer here!</b>', textfont=dict(color=px.colors.qualitative.Light24[0], size=20, style='italic'),
-                               marker=go.scatter3d.Marker(color=px.colors.qualitative.D3[3], size=10.5, symbol='diamond')))
-   
-    st.plotly_chart(fig, theme=None)
+                            mode='markers+text', 
+                            text='<b>Your customer here!</b>', textfont=dict(color=px.colors.qualitative.Light24[0], size=20, style='italic'),
+                            marker=go.scatter3d.Marker(color=px.colors.qualitative.D3[3], size=10.5, symbol='diamond')))
+
+    st.plotly_chart(fig)
