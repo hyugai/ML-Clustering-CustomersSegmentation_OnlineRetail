@@ -20,8 +20,8 @@ names = df_base.select_dtypes(np.number).columns.drop('customer_id').tolist()
 
 #### mapping labels
 new_label = {
-    '0': 'Whales', '1': 'New customers(1st)', 
-    '2': 'New customers(2nd)', '3': 'One-time buyers'
+    '0': 'Whales', '1': 'New customers(2nd)', 
+    '2': 'One-time buyers', '3': 'New customers(1st)'
 }
 df_base['new_label'] = df_base['label'].map(new_label)
 
@@ -159,8 +159,8 @@ with col5:
                                   marker={
                                       'color': [
                                           px.colors.qualitative.Dark2[3], 
-                                          px.colors.qualitative.Dark2[2], 
                                           px.colors.qualitative.Dark2[1], 
+                                          px.colors.qualitative.Dark2[2], 
                                           px.colors.qualitative.Dark2[0]
                                       ]
                                   }, name=name), 
@@ -181,7 +181,7 @@ labels = country_segmetation.columns.tolist()
 #### palette
 palette = {
     'Whales': px.colors.qualitative.Dark2[0], 'New customers(1st)': px.colors.qualitative.Dark2[3],
-    'New customers(2nd)': px.colors.qualitative.Dark2[2], 'One-time buyers': px.colors.qualitative.Dark2[1]
+    'New customers(2nd)': px.colors.qualitative.Dark2[1], 'One-time buyers': px.colors.qualitative.Dark2[2]
 }
 
 fig_stacked_bar = go.Figure()
