@@ -105,7 +105,12 @@ with col4:
                          }))
     
     #### plot's size adjustment
-    fig.update_layout(width=600, height=500)
+    fig.update_layout(
+        title={
+            'text': '<b>Percentage(%) segmented customer account for</b>',
+            'font': dict(size=27)
+        },
+        width=600, height=500)
     
     st.plotly_chart(fig, theme=None)
 
@@ -116,12 +121,6 @@ with col5:
                                  'Recency', 'Monetary', 'Frequency'
                              ])
     for i, name in enumerate(names):
-        # fig_bars.add_bar(y=x[name], x=x.index.tolist(), 
-        #                  name=name.title(), 
-        #                  marker={
-        #                      'color': [px.colors.qualitative.Dark2[0]]
-        #                  },
-        #                  row=i+1, col=1)
         fig_bars.add_trace(go.Bar(x=x.index.tolist(), y=x[name], 
                                   marker={
                                       'color': [
@@ -134,6 +133,28 @@ with col5:
                            row=i+1, col=1)
         
     fig_bars.update_layout(showlegend=False,
+                           title={
+                               'text': '<b>Traits on \'\'RFM\'\' criteria</b>', 
+                               'font': dict(size=27)},
                            width=700, height=500)
 
     st.plotly_chart(fig_bars, theme=None)
+
+###
+country_segmetation = pd.crosstab(index=df_base['country'], columns=df_base['new_label'])
+labels = country_segmetation.columns.tolist()
+
+fig_stacked_bar = go.Figure()
+for label in labels:
+    fig_stacked_bar.add_trace(go.Bar(x=country_segmetation.index.tolist(), 
+                                    y=country_segmetation[label],
+                                    name=label))
+fig_stacked_bar.update_layout(
+    barmode='stack', 
+    title={
+        'text': '<b>Distributon of customers in countries</b>',
+        'font': dict(size=27)
+    }
+    )
+
+st.plotly_chart(fig_stacked_bar)
