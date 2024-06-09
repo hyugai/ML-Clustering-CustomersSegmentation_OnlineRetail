@@ -36,56 +36,91 @@ kmeans = joblib.load('../models/kmeans.pkl')
 st.title('Exploratory Data Analysis')
 
 ### histograms
+st.markdown('### \'\'RFM\'\' distribution')
+
 col1, col2, col3 = st.columns(3)
-with col1:
-    fig_hist = px.histogram(data_frame=df_base, x=names[0], color='new_label', 
-                            barmode='stack', opacity=0.7, 
-                            color_discrete_sequence=[
-                                px.colors.qualitative.Dark2[0], 
-                                px.colors.qualitative.Dark2[1], 
-                                px.colors.qualitative.Dark2[2], 
-                                px.colors.qualitative.Dark2[3]
-                            ],
-                            width=500)
-    
-    fig_hist.update_layout(xaxis_title=names[0].title(), yaxis_title=None,
-                           showlegend=False)
+if st.checkbox(label='Show types of segmented customers'):
+    with col1:
+        fig_hist = px.histogram(data_frame=df_base, x=names[0], color='new_label', 
+                                barmode='stack', opacity=0.7, 
+                                color_discrete_sequence=[
+                                    px.colors.qualitative.Dark2[0], 
+                                    px.colors.qualitative.Dark2[1], 
+                                    px.colors.qualitative.Dark2[2], 
+                                    px.colors.qualitative.Dark2[3]
+                                ],
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[0].title(), yaxis_title=None,
+                            showlegend=False)
 
-    st.plotly_chart(fig_hist, theme=None)
+        st.plotly_chart(fig_hist, theme=None)
 
-with col2:
-    fig_hist = px.histogram(data_frame=df_base, x=names[1], color='new_label', 
-                            barmode='stack', opacity=0.7,
-                            color_discrete_sequence=[
-                                px.colors.qualitative.Dark2[0], 
-                                px.colors.qualitative.Dark2[1],
-                                px.colors.qualitative.Dark2[2],
-                                px.colors.qualitative.Dark2[3]
-                            ],
-                            width=500)
-    
-    fig_hist.update_layout(xaxis_title=names[1].title(), yaxis_title=None, 
-                           showlegend=False)
+    with col2:
+        fig_hist = px.histogram(data_frame=df_base, x=names[1], color='new_label', 
+                                barmode='stack', opacity=0.7,
+                                color_discrete_sequence=[
+                                    px.colors.qualitative.Dark2[0], 
+                                    px.colors.qualitative.Dark2[1],
+                                    px.colors.qualitative.Dark2[2],
+                                    px.colors.qualitative.Dark2[3]
+                                ],
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[1].title(), yaxis_title=None, 
+                            showlegend=False)
 
-    st.plotly_chart(fig_hist, theme=None)
+        st.plotly_chart(fig_hist, theme=None)
 
-with col3:
-    fig_hist = px.histogram(data_frame=df_base, x=names[2], color='new_label', 
-                            barmode='stack', opacity=0.7, 
-                            color_discrete_sequence=[
-                                px.colors.qualitative.Dark2[0],
-                                px.colors.qualitative.Dark2[1],
-                                px.colors.qualitative.Dark2[2],
-                                px.colors.qualitative.Dark2[3]
-                            ],
-                            width=500)
-    
-    fig_hist.update_layout(xaxis_title=names[2].title(), yaxis_title=None, 
-                           showlegend=False)
+    with col3:
+        fig_hist = px.histogram(data_frame=df_base, x=names[2], color='new_label', 
+                                barmode='stack', opacity=0.7, 
+                                color_discrete_sequence=[
+                                    px.colors.qualitative.Dark2[0],
+                                    px.colors.qualitative.Dark2[1],
+                                    px.colors.qualitative.Dark2[2],
+                                    px.colors.qualitative.Dark2[3]
+                                ],
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[2].title(), yaxis_title=None, 
+                            showlegend=False)
 
-    st.plotly_chart(fig_hist, theme=None)
+        st.plotly_chart(fig_hist, theme=None)
+else:
+    with col1:
+        fig_hist = px.histogram(data_frame=df_base, x=names[0], 
+                                barmode='stack', opacity=0.7,
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[0].title(), yaxis_title=None,
+                            showlegend=False)
 
+        st.plotly_chart(fig_hist, theme=None)
+
+    with col2:
+        fig_hist = px.histogram(data_frame=df_base, x=names[1], 
+                                barmode='stack', opacity=0.7,
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[1].title(), yaxis_title=None, 
+                            showlegend=False)
+
+        st.plotly_chart(fig_hist, theme=None)
+
+    with col3:
+        fig_hist = px.histogram(data_frame=df_base, x=names[2], 
+                                barmode='stack', opacity=0.7,
+                                width=500)
+        
+        fig_hist.update_layout(xaxis_title=names[2].title(), yaxis_title=None, 
+                            showlegend=False)
+
+        st.plotly_chart(fig_hist, theme=None)
+
+st.markdown('### Summarize statistics')
 st.write(df_base[['recency', 'frequency', 'monetary']].describe().T)
+st.write(df_base[['country', 'new_label']].describe().T)
 
 ### pie + bars
 col4, col5 = st.columns([0.5, 0.5])
