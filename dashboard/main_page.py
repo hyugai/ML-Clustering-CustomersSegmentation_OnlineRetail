@@ -19,3 +19,7 @@ df_base = pd.read_csv('../dataset/labeled_rfm.csv')
 scaler = joblib.load('../models/scaler.pkl')
 kmeans = joblib.load('../models/kmeans.pkl')
 
+###
+st.set_page_config(page_title='Customer Segmentation: Online Retail', 
+                   layout='wide')
+st.title('Overviews')
