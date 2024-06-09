@@ -18,24 +18,24 @@ df_base = pd.read_csv('../dataset/labeled_rfm.csv')
 df_base['label'] = df_base['label'].astype(str)
 names = df_base.select_dtypes(np.number).columns.drop('customer_id').tolist()
 
-#### adjust labels
+#### mapping labels
 new_label = {
     '0': 'Whales', '1': 'New customers(1st)', 
     '2': 'New customers(2nd)', '3': 'One-time buyers'
 }
 df_base['new_label'] = df_base['label'].map(new_label)
 
-####
+#### 
 x = df_base.groupby('new_label', observed=True)[names].mean()
 
 ## load model
 scaler = joblib.load('../models/scaler.pkl')
 kmeans = joblib.load('../models/kmeans.pkl')
 
-###
+### page title
 st.title('Exploratory Data Analysis')
 
-### histogram
+### histograms
 col1, col2, col3 = st.columns(3)
 with col1:
     fig_hist = px.histogram(data_frame=df_base, x=names[0], color='new_label', 
@@ -87,7 +87,7 @@ with col3:
 
 st.write(df_base[['recency', 'frequency', 'monetary']].describe().T)
 
-### columns 
+### pie + bars
 col4, col5 = st.columns([0.5, 0.5])
 
 with col4:
@@ -139,11 +139,11 @@ with col5:
 
     st.plotly_chart(fig_bars, theme=None)
 
-###
+### stacked bars chart
 country_segmetation = pd.crosstab(index=df_base['country'], columns=df_base['new_label'])
 labels = country_segmetation.columns.tolist()
 
-## palette
+#### palette
 palette = {
     'Whales': px.colors.qualitative.Dark2[0], 'New customers(1st)': px.colors.qualitative.Dark2[3],
     'New customers(2nd)': px.colors.qualitative.Dark2[2], 'One-time buyers': px.colors.qualitative.Dark2[1]
