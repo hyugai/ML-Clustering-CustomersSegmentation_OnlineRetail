@@ -32,7 +32,6 @@ x = df_base.groupby('new_label', observed=True)[names].mean()
 scaler = joblib.load('../models/scaler.pkl')
 kmeans = joblib.load('../models/kmeans.pkl')
 
-
 ###
 st.title('Exploratory Data Analysis')
 
@@ -144,17 +143,28 @@ with col5:
 country_segmetation = pd.crosstab(index=df_base['country'], columns=df_base['new_label'])
 labels = country_segmetation.columns.tolist()
 
+## palette
+palette = {
+    'Whales': px.colors.qualitative.Dark2[0], 'New customers(1st)': px.colors.qualitative.Dark2[3],
+    'New customers(2nd)': px.colors.qualitative.Dark2[2], 'One-time buyers': px.colors.qualitative.Dark2[1]
+}
+
 fig_stacked_bar = go.Figure()
 for label in labels:
     fig_stacked_bar.add_trace(go.Bar(x=country_segmetation.index.tolist(), 
                                     y=country_segmetation[label],
+                                    marker={
+                                        'color': [
+                                            palette[label]
+                                        ]*len(country_segmetation.index.tolist())
+                                    },
                                     name=label))
 fig_stacked_bar.update_layout(
     barmode='stack', 
     title={
-        'text': '<b>Distributon of customers in countries</b>',
+        'text': '<b>Distribution of customers in countries</b>',
         'font': dict(size=27)
     }
     )
 
-st.plotly_chart(fig_stacked_bar)
+st.plotly_chart(fig_stacked_bar, theme=None)
