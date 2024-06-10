@@ -43,13 +43,14 @@ if st.checkbox(label='Show types of segmented customers'):
     with col1:
         fig_hist = px.histogram(data_frame=df_base, x=names[0], color='new_label', 
                                 barmode='stack', opacity=0.7, 
+                                marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0], 
                                     px.colors.qualitative.Dark2[1], 
                                     px.colors.qualitative.Dark2[2], 
                                     px.colors.qualitative.Dark2[3]
                                 ],
-                                width=500)
+                                width=1000, height=600)
         
         fig_hist.update_layout(xaxis_title=names[0].title(), yaxis_title=None,
                             showlegend=False)
@@ -59,13 +60,14 @@ if st.checkbox(label='Show types of segmented customers'):
     with col2:
         fig_hist = px.histogram(data_frame=df_base, x=names[1], color='new_label', 
                                 barmode='stack', opacity=0.7,
+                                marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0], 
                                     px.colors.qualitative.Dark2[1],
                                     px.colors.qualitative.Dark2[2],
                                     px.colors.qualitative.Dark2[3]
                                 ],
-                                width=500)
+                                width=1000, height=600)
         
         fig_hist.update_layout(xaxis_title=names[1].title(), yaxis_title=None, 
                             showlegend=False)
@@ -75,13 +77,14 @@ if st.checkbox(label='Show types of segmented customers'):
     with col3:
         fig_hist = px.histogram(data_frame=df_base, x=names[2], color='new_label', 
                                 barmode='stack', opacity=0.7, 
+                                marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0],
                                     px.colors.qualitative.Dark2[1],
                                     px.colors.qualitative.Dark2[2],
                                     px.colors.qualitative.Dark2[3]
                                 ],
-                                width=500)
+                                width=1000, height=600)
         
         fig_hist.update_layout(xaxis_title=names[2].title(), yaxis_title=None, 
                             showlegend=False)
@@ -91,7 +94,8 @@ else:
     with col1:
         fig_hist = px.histogram(data_frame=df_base, x=names[0], 
                                 barmode='stack', opacity=0.7,
-                                width=500)
+                                marginal='box',
+                                width=800, height=600)
         
         fig_hist.update_layout(xaxis_title=names[0].title(), yaxis_title=None,
                             showlegend=False)
@@ -101,7 +105,8 @@ else:
     with col2:
         fig_hist = px.histogram(data_frame=df_base, x=names[1], 
                                 barmode='stack', opacity=0.7,
-                                width=500)
+                                marginal='box',
+                                width=800, height=600)
         
         fig_hist.update_layout(xaxis_title=names[1].title(), yaxis_title=None, 
                             showlegend=False)
@@ -111,7 +116,8 @@ else:
     with col3:
         fig_hist = px.histogram(data_frame=df_base, x=names[2], 
                                 barmode='stack', opacity=0.7,
-                                width=500)
+                                marginal='box',
+                                width=800, height=600)
         
         fig_hist.update_layout(xaxis_title=names[2].title(), yaxis_title=None, 
                             showlegend=False)
