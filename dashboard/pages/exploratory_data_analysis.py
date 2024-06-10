@@ -93,7 +93,8 @@ if st.checkbox(label='Show types of segmented customers'):
 else:
     with col1:
         fig_hist = px.histogram(data_frame=df_base, x=names[0], 
-                                barmode='stack', opacity=0.7,
+                                barmode='stack', opacity=0.7, 
+                                color_discrete_sequence=[px.colors.qualitative.Dark24[0]],
                                 marginal='box',
                                 width=800, height=600)
         
@@ -105,6 +106,7 @@ else:
     with col2:
         fig_hist = px.histogram(data_frame=df_base, x=names[1], 
                                 barmode='stack', opacity=0.7,
+                                color_discrete_sequence=[px.colors.qualitative.Dark24[0]],
                                 marginal='box',
                                 width=800, height=600)
         
@@ -116,6 +118,7 @@ else:
     with col3:
         fig_hist = px.histogram(data_frame=df_base, x=names[2], 
                                 barmode='stack', opacity=0.7,
+                                color_discrete_sequence=[px.colors.qualitative.Dark24[0]],
                                 marginal='box',
                                 width=800, height=600)
         
@@ -124,13 +127,13 @@ else:
 
         st.plotly_chart(fig_hist, theme=None)
 
+### summarize statistics
 st.markdown('### Summarize statistics')
 st.write(df_base[['recency', 'frequency', 'monetary']].describe().T)
 st.write(df_base[['country', 'new_label']].describe().T)
 
 ### pie + bars
 col4, col5 = st.columns([0.5, 0.5])
-
 with col4:
     fig = go.Figure()
     fig.add_trace(go.Pie(labels=df_base['new_label'].value_counts(ascending=True).index.tolist(), 
@@ -155,7 +158,6 @@ with col4:
     st.plotly_chart(fig, theme=None)
 
 with col5:
-
     fig_bars = make_subplots(rows=3, cols=1, shared_xaxes=True, 
                              subplot_titles=[
                                  'Recency', 'Monetary', 'Frequency'
