@@ -46,9 +46,9 @@ if st.checkbox(label='Show types of segmented customers'):
                                 marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0], 
-                                    px.colors.qualitative.Dark2[1], 
+                                    px.colors.qualitative.Dark2[3], 
                                     px.colors.qualitative.Dark2[2], 
-                                    px.colors.qualitative.Dark2[3]
+                                    px.colors.qualitative.Dark2[1]
                                 ],
                                 width=1000, height=600)
         
@@ -63,9 +63,9 @@ if st.checkbox(label='Show types of segmented customers'):
                                 marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0], 
-                                    px.colors.qualitative.Dark2[1],
+                                    px.colors.qualitative.Dark2[3],
                                     px.colors.qualitative.Dark2[2],
-                                    px.colors.qualitative.Dark2[3]
+                                    px.colors.qualitative.Dark2[1]
                                 ],
                                 width=1000, height=600)
         
@@ -80,9 +80,9 @@ if st.checkbox(label='Show types of segmented customers'):
                                 marginal='box',
                                 color_discrete_sequence=[
                                     px.colors.qualitative.Dark2[0],
-                                    px.colors.qualitative.Dark2[1],
+                                    px.colors.qualitative.Dark2[3],
                                     px.colors.qualitative.Dark2[2],
-                                    px.colors.qualitative.Dark2[3]
+                                    px.colors.qualitative.Dark2[1]
                                 ],
                                 width=1000, height=600)
         
@@ -142,8 +142,8 @@ with col4:
                              'colors': [
                                  px.colors.qualitative.Dark2[0], 
                                  px.colors.qualitative.Dark2[2],
-                                 px.colors.qualitative.Dark2[3], 
-                                 px.colors.qualitative.Dark2[1]
+                                 px.colors.qualitative.Dark2[1], 
+                                 px.colors.qualitative.Dark2[3]
                              ]
                          }))
     

@@ -4,7 +4,7 @@ import pandas as pd
 
 # visualization
 import plotly.express as px
-import plotly.graph_objects as po
+import plotly.graph_objects as go
 
 # dashboard
 import streamlit as st
@@ -14,6 +14,19 @@ import joblib
 
 ## load dataset
 df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base['label'] = df_base['label'].astype(str)
+
+### map new label
+new_labels = {
+    '0': 'Whales', '1': 'New customers(2nd)',
+    '2': 'One-time buyers', '3': 'New customers(1st)'
+}
+
+df_base['mapped_label'] = df_base['label'].map(new_labels)
+
+### map size
+sizes = ((df_base['mapped_label'].value_counts() / len(df_base))*50).to_dict()
+df_base['mapped_size'] = df_base['mapped_label'].map(sizes)
 
 ## load model
 scaler = joblib.load('../models/scaler.pkl')
@@ -21,4 +34,73 @@ kmeans = joblib.load('../models/kmeans.pkl')
 
 
 ###
-st.title('Visulization of Segmentation')
+st.title('Visualize segmentation')
+
+mode = st.radio(label='Select a type of information to fill', 
+                options=['Customer\'s ID', 'RFM info'])
+
+col1, col2 = st.columns([0.15, 0.6])
+
+fig_scatter = px.scatter_3d(
+    data_frame=df_base, 
+    x='recency', y='frequency', z='monetary',
+    size='mapped_size',
+    color='mapped_label', 
+    color_discrete_sequence=[
+        px.colors.qualitative.Dark2[0],
+        px.colors.qualitative.Dark2[3],
+        px.colors.qualitative.Dark2[2],
+        px.colors.qualitative.Dark2[1]
+    ],
+    opacity=0.55,
+    width=1000, height=800
+)
+fig_scatter.update_traces(
+    marker={
+        'line': dict(width=0)
+    }
+)
+
+
+if mode == 'RFM info':
+    with col1:
+        ####
+        date = st.date_input(
+            label='***Date of the latest successful order***', 
+            min_value=pd.to_datetime('2010-12-01'),
+            max_value=pd.to_datetime('2011-12-09')
+        )
+        recency = (pd.to_datetime(date) - pd.to_datetime('2010-12-01')).days
+
+        ####
+        frequency = st.number_input(
+            label='***Number of orders***',
+            format='%d',
+            min_value=1
+        )
+
+        ####
+        monetary = st.number_input(
+            label='***Amount of spent money***',
+            format='%f',
+            min_value=0.01
+        )
+
+    fig_scatter.add_trace(
+        go.Scatter3d(
+            name='Your customer',
+            x=[recency], y=[frequency], z=[monetary], 
+            mode='markers+text',
+            text='Your customer\'s here!', textfont={
+                'color': px.colors.qualitative.Light24[5],
+                'size': 20
+            },
+            marker={
+                'symbol': 'diamond',
+                'color': px.colors.qualitative.Light24[5],
+                'size': 8.5
+            }
+        )
+    )
+    st.plotly_chart(fig_scatter, theme=None)
+    
