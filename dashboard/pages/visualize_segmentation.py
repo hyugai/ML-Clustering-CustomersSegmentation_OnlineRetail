@@ -39,7 +39,7 @@ st.title('Visualize segmentation')
 mode = st.radio(label='Select a type of information to fill', 
                 options=['Customer\'s ID', 'RFM info'])
 
-col1, col2 = st.columns([0.15, 0.6])
+col1, col2 = st.columns([0.17, 0.6])
 
 fig_scatter = px.scatter_3d(
     data_frame=df_base, 
@@ -103,11 +103,12 @@ if mode == 'RFM info':
         )
     )
     st.plotly_chart(fig_scatter, theme=None)
+        
 
 elif mode == 'Customer\'s ID':
     with col1:
         try:
-            ####
+            #### get the ID of the customer
             id = st.number_input(
                 label='Enter customer\'s ID here',
                 format='%d', 
@@ -115,7 +116,7 @@ elif mode == 'Customer\'s ID':
                 max_value=18287
             )
 
-            ####
+            #### retrive RFM infomation
             mask_id = df_base['customer_id'] == id
             selected_customer = df_base[mask_id]
 
@@ -123,8 +124,24 @@ elif mode == 'Customer\'s ID':
             recency = selected_customer['recency'].values[0]
             frequency = selected_customer['frequency'].values[0]
             monetary = selected_customer['monetary'].values[0]
+
+            #### type of the customer
+            button = st.button(
+                label='Click to know the type of this customer'
+            )
+            label = selected_customer['mapped_label'].values[0]
+            if button:
+                if label == 'Whales':
+                    st.success(label)
+                elif label == 'New customers(2nd)':
+                    st.warning(label)
+                elif label == 'New customers(1st)':
+                    st.info(label)
+                else:
+                    st.warning(label)
+
         except:
-            print('Please check the ID again!')
+            st.error('Please check the ID again!')
 
     ####
     fig_scatter.add_trace(
