@@ -14,7 +14,7 @@ import streamlit as st
 import joblib
 
 ## load and modify dataset
-df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base = pd.read_csv('../../dataset/labeled_rfm.csv')
 df_base['label'] = df_base['label'].astype(str)
 names = df_base.select_dtypes(np.number).columns.drop('customer_id').tolist()
 
