@@ -14,7 +14,7 @@ import streamlit as st
 import joblib
 
 ## load and modify dataset
-df_base = pd.read_csv('../../dataset/labeled_rfm.csv')
+df_base = pd.read_csv('../dataset/labeled_rfm.csv')
 df_base['label'] = df_base['label'].astype(str)
 names = df_base.select_dtypes(np.number).columns.drop('customer_id').tolist()
 
@@ -29,8 +29,8 @@ df_base['new_label'] = df_base['label'].map(new_label)
 x = df_base.groupby('new_label', observed=True)[names].mean()
 
 ## load model
-scaler = joblib.load('../../models/scaler.pkl')
-kmeans = joblib.load('../../models/kmeans.pkl')
+scaler = joblib.load('../models/scaler.pkl')
+kmeans = joblib.load('../models/kmeans.pkl')
 
 ### page title
 st.title('Exploratory Data Analysis')
