@@ -31,3 +31,4 @@ st.text(
 st.markdown('##### 1. Exploratory Data Analysis\
             \n##### 2. Visualize Segmentation\
             \n#### Enjoys!')
+st.markdown('*Creator: Le Gia Huy*')
