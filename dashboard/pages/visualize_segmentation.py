@@ -86,23 +86,27 @@ if mode == 'RFM info':
             min_value=0.01
         )
 
-    fig_scatter.add_trace(
-        go.Scatter3d(
-            name='Your customer',
-            x=[recency], y=[frequency], z=[monetary], 
-            mode='markers+text',
-            text='Your customer\'s here!', textfont={
-                'color': px.colors.qualitative.Light24[5],
-                'size': 20
-            },
-            marker={
-                'symbol': 'diamond',
-                'color': px.colors.qualitative.Light24[5],
-                'size': 8.5
-            }
+        ####
+        button = st.button(
+            label='Click here to know the segmented type'
         )
-    )
-    st.plotly_chart(fig_scatter, theme=None)
+        if button:
+            ####
+            scaled_rfm = scaler.transform(
+                np.array([recency, frequency, monetary]).reshape(1, -1)
+            )
+            predicted_label = kmeans.predict(scaled_rfm)
+
+            ####
+            mapped_label = new_labels[str(predicted_label[0])]
+            if mapped_label == 'Whales':
+                st.success('Whales')
+            elif mapped_label == 'New customers(1st)':
+                st.info('New customers(1st)')
+            elif mapped_label == 'New customers(2nd)':
+                st.info('New customers(2nd)')
+            else:
+                st.warning('One-time buyers')
         
 
 elif mode == 'Customer\'s ID':
@@ -127,14 +131,14 @@ elif mode == 'Customer\'s ID':
 
             #### type of the customer
             button = st.button(
-                label='Click to know the type of this customer'
+                label='Click to know the the segmented type'
             )
             label = selected_customer['mapped_label'].values[0]
             if button:
                 if label == 'Whales':
                     st.success(label)
                 elif label == 'New customers(2nd)':
-                    st.warning(label)
+                    st.info(label)
                 elif label == 'New customers(1st)':
                     st.info(label)
                 else:
@@ -143,22 +147,22 @@ elif mode == 'Customer\'s ID':
         except:
             st.error('Please check the ID again!')
 
-    ####
-    fig_scatter.add_trace(
-        go.Scatter3d(
-            name='Your customer',
-            x=[recency], y=[frequency], z=[monetary], 
-            mode='markers+text', 
-            text='Your customers\'s here!', 
-            textfont={
-                'color': px.colors.qualitative.Light24[5],
-                'size': 20
-            }, 
-            marker={
-                'symbol': 'diamond', 
-                'color': px.colors.qualitative.Light24[5],
-                'size': 8.5
-            }
-        )
+####
+fig_scatter.add_trace(
+    go.Scatter3d(
+        name='Your customer',
+        x=[recency], y=[frequency], z=[monetary], 
+        mode='markers+text', 
+        text='Your customers\'s here!', 
+        textfont={
+            'color': px.colors.qualitative.Light24[5],
+            'size': 20
+        }, 
+        marker={
+            'symbol': 'diamond', 
+            'color': px.colors.qualitative.Light24[5],
+            'size': 8.5
+        }
     )
-    st.plotly_chart(fig_scatter, theme=None)
+)
+st.plotly_chart(fig_scatter, theme=None)
