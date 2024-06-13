@@ -103,4 +103,45 @@ if mode == 'RFM info':
         )
     )
     st.plotly_chart(fig_scatter, theme=None)
-    
+
+elif mode == 'Customer\'s ID':
+    with col1:
+        try:
+            ####
+            id = st.number_input(
+                label='Enter customer\'s ID here',
+                format='%d', 
+                min_value=12347, 
+                max_value=18287
+            )
+
+            ####
+            mask_id = df_base['customer_id'] == id
+            selected_customer = df_base[mask_id]
+
+            ####
+            recency = selected_customer['recency'].values[0]
+            frequency = selected_customer['frequency'].values[0]
+            monetary = selected_customer['monetary'].values[0]
+        except:
+            print('Please check the ID again!')
+
+    ####
+    fig_scatter.add_trace(
+        go.Scatter3d(
+            name='Your customer',
+            x=[recency], y=[frequency], z=[monetary], 
+            mode='markers+text', 
+            text='Your customers\'s here!', 
+            textfont={
+                'color': px.colors.qualitative.Light24[5],
+                'size': 20
+            }, 
+            marker={
+                'symbol': 'diamond', 
+                'color': px.colors.qualitative.Light24[5],
+                'size': 8.5
+            }
+        )
+    )
+    st.plotly_chart(fig_scatter, theme=None)
