@@ -29,8 +29,8 @@ df_base['new_label'] = df_base['label'].map(new_label)
 x = df_base.groupby('new_label', observed=True)[names].mean()
 
 ## load model
-scaler = joblib.load('../models/scaler.pkl')
-kmeans = joblib.load('../models/kmeans.pkl')
+scaler = joblib.load('models/scaler.pkl')
+kmeans = joblib.load('models/kmeans.pkl')
 
 ### page title
 st.title('Exploratory Data Analysis')
