@@ -13,11 +13,11 @@ import streamlit as st
 import joblib
 
 ## load dataset
-df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base = pd.read_csv('../../dataset/labeled_rfm.csv')
 
 ## load model
-scaler = joblib.load('../models/scaler.pkl')
-kmeans = joblib.load('../models/kmeans.pkl')
+scaler = joblib.load('../../models/scaler.pkl')
+kmeans = joblib.load('../../models/kmeans.pkl')
 
 ###
 st.set_page_config(page_title='Customer Segmentation: Online Retail', 

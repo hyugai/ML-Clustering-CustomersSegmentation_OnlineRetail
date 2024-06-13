@@ -13,7 +13,7 @@ import streamlit as st
 import joblib
 
 ## load dataset
-df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base = pd.read_csv('../../dataset/labeled_rfm.csv')
 df_base['label'] = df_base['label'].astype(str)
 
 ### map new label
@@ -29,8 +29,8 @@ sizes = ((df_base['mapped_label'].value_counts() / len(df_base))*50).to_dict()
 df_base['mapped_size'] = df_base['mapped_label'].map(sizes)
 
 ## load model
-scaler = joblib.load('../models/scaler.pkl')
-kmeans = joblib.load('../models/kmeans.pkl')
+scaler = joblib.load('../../models/scaler.pkl')
+kmeans = joblib.load('../../models/kmeans.pkl')
 
 
 ###
