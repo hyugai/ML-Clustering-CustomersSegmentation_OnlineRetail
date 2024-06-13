@@ -13,7 +13,7 @@ import streamlit as st
 import joblib
 
 ## load dataset
-df_base = pd.read_csv('../dataset/labeled_rfm.csv')
+df_base = pd.read_csv('dataset/labeled_rfm.csv')
 df_base['label'] = df_base['label'].astype(str)
 
 ### map new label
